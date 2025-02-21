@@ -19,6 +19,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private Transform waypoint;
     [SerializeField] private Transform[] pathWaypoints;
     
+    [SerializeField] private Camera playerMainCamera;
+    
     private Animator animator;
 
     public int Hp
@@ -106,26 +108,25 @@ public class PlayerCharacterController : MonoBehaviour
 
         if (animator)
             animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
-        
-        if (Camera.main != null)
+
+        //HoverTool();
+    }
+
+    private void HoverTool() // we extracted this out of update. We also commented it out because it was causing errors.
+    {
+        Ray ray = playerMainCamera.ScreenPointToRay(Input.mousePosition); // This is unnecessary, and we don't see it used, we see it's a hover-tool of sorts.
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-            {
-                //We want to know what the mouse is hovering now
-                Debug.Log($"Hit: {hit.collider.name}");
-            }
+            //We want to know what the mouse is hovering now
+            Debug.Log($"Hit: {hit.collider.name}");
         }
-
-    }
-    
-    private void OnEnable()
-    {
-        
     }
 
-    private void OnDisable()
+    private void OnValidate()
     {
-        
+        if (playerMainCamera == null)
+        {
+            Debug.LogWarning("PlayerCharacterController::OnValidate::playerMainCamera is null");
+        }
     }
 }

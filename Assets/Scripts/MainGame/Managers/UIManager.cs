@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI hpText;
     
     [SerializeField] private PlayerCharacterController bobby;
-    [SerializeField] private GameObject skillsHolder;
+    [SerializeField] private SkillButtonUI[] skillButtons;
     
     public void RefreshHPText(int newHP)
     {
@@ -24,17 +24,10 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         hpText.text = bobby.Hp.ToString();
-    }
-
-    private void Update()
-    {
-        skillsHolder = GameObject.Find("Skills Group");
-        GameObject[] skillsButtonUI = skillsHolder.GetComponentsInChildren<GameObject>();
-        
-        for (int i = 0; i < skillsButtonUI.Length; i++)
+        for (int i = 0; i < skillButtons.Length; i++)
         {
-            skillsButtonUI[i].GetComponent<SkillButtonUI>().skillIcon.sprite =  skillsButtonUI[i].GetComponent<SkillButtonUI>().skillIcons[i];
-            skillsButtonUI[i].GetComponent<SkillButtonUI>().skillNameText.text = "Skill " + (i + 1);
+            skillButtons[i].skillIcon.sprite =  skillButtons[i].skillIcons[i];
+            skillButtons[i].skillNameText.text = "Skill " + (i + 1);
         }
     }
 }
