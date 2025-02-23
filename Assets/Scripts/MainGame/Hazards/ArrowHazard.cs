@@ -12,6 +12,7 @@ public class ArrowHazard : MonoBehaviour
     void Start()
     {
         shootIntervalLeft = shootInterval;
+        
     }
 
     // Update is called once per frame
